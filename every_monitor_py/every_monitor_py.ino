@@ -125,6 +125,18 @@ void loop(){
   } else {
     lcd.print("failed to find");
   }
+  flushSerial();
+  Serial.println("dt");
+  num = response(3000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Ballet traffic:");
+  lcd.setCursor(0,1);
+  if (!num == false) {
+    lcd.print(num);
+  } else {
+    lcd.print("failed to find");
+  }
   delay(3000);
   checkConnection();
 }

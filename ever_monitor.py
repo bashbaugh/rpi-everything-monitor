@@ -11,6 +11,10 @@ apexurl = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=202+
 treet,+Lafayette,+CO&destinations=LRocky+Mountain+Christian+Church,+Frederick+Campus,+Majestic+Street,+Frederick\
 ,+CO&departure_time=now&traffic_model=best_guess&key=AIzaSyAUl3FNewt5gQKEzuOjBU6CTqCMcfmpuM4"
 
+danceurl = "https://maps.googleapis.com/maps/api/distancematrix/json?orig\
+ins=202+West+Chester+Street,+Lafayette,+CO&destinations=Danse+Etoile+Ballet,+East+South+Boulder+Road,+Louisville,+CO&depart\
+ure_time=now&traffic_model=best_guess&key=AIzaSyAUl3FNewt5gQKEzuOjBU6CTqCMcfmpuM4"
+
 def send(code):
     ser.write(struct.pack('>B', code))
 
@@ -23,6 +27,11 @@ while True:
 
     if message == "at":
         response = urlopen(apexurl)
+        data = json.loads(response.read())
+        send(data["rows"][0]["elements"][0]["duration_in_traffic"]["value"] / 60 + 1)
+
+    if message == "dt":
+        response = urlopen(danceurl)
         data = json.loads(response.read())
         send(data["rows"][0]["elements"][0]["duration_in_traffic"]["value"] / 60 + 1)
 
