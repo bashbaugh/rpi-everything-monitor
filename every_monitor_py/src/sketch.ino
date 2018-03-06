@@ -7,6 +7,8 @@
 #define led 13
 #define powerbutton 2
 #define powerpin 8
+#define trig 9
+#define echo 10
 int num = false;
 volatile boolean poweroff = false;
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
@@ -23,13 +25,13 @@ void sleep()
  
 void powerdown() {
   digitalWrite(led, LOW);
-  pinMode(powerpin, OUTPUT);
-  digitalWrite(powerpin, LOW);
+  Serial.println("p");
+  delay(500);
+  Serial.println("p");
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Shutting down...");
   delay(5000);
-  pinMode(powerpin, INPUT);
   delay(10000);
   lcd.setCursor(0,1);
   lcd.print("Unplug Power");
@@ -140,3 +142,5 @@ void loop(){
   delay(3000);
   checkConnection();
 }
+
+

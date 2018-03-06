@@ -1,6 +1,7 @@
 import serial, struct, json
 from time import sleep
 from urllib import urlopen
+import subprocess
 ser = serial.Serial('/dev/ttyUSB0', 9600)
 ser.flushInput()
 lcurl = "https://maps.googleapis.com/maps/api/distancematrix/json?origin\
@@ -34,7 +35,9 @@ while True:
         response = urlopen(danceurl)
         data = json.loads(response.read())
         send(data["rows"][0]["elements"][0]["duration_in_traffic"]["value"] / 60 + 1)
-
+    if message == "p":
+        print("shutting down")
+        subprocess.call(['shutdown', '-h', 'now'], shell=False)
     if message == "r":
         send(1)
     ser.flushInput()
